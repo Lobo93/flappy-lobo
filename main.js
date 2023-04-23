@@ -1,3 +1,11 @@
+let titulo = 'Flappy Lobo' // Título do jogo
+let corDoCeu = '#4488cc' // Cor do céu
+let velocidade = 160 // velocidade do jogo (quanto maior, mais rápido)
+let espacoEntreCanos = 180 // Espaçamento entre os canos (quanto maior, mais fácil passar pelos canos)
+
+//Mudar título do documento
+document.title = titulo
+
 // Canvas
 const contexto = canvas.getContext('2d')
 
@@ -129,14 +137,14 @@ function eventoToque() {
 		jogando = true
 		tempoDeFlash = 1
 		pontos = 0
-		canos.unshift(new Cano(600, Math.random() * 120 + 120, 180))
+		setTimeout(criarCano, 1000)
 	}
 }
 
 // Canos
 const canos = []
 class Cano {
-	constructor(posicao, altura, abertura) {
+	constructor(posicao, altura, abertura = espacoEntreCanos) {
 		this.posicao = posicao,
 		this.altura = altura,
 		this.abertura = abertura,
@@ -163,6 +171,10 @@ class Cano {
 	}
 }
 
+function criarCano() {
+	canos.unshift(new Cano(432, Math.random() * 120 + 140))
+}
+
 function cicloCanos() {
 	canos.forEach(cano => {
 		// Mudar posição do cano
@@ -172,13 +184,13 @@ function cicloCanos() {
 		if (cano.posicao < -32) canos.pop()
 
 		// Criar próximo cano
-		if (jogando && cano.proximoCano && cano.posicao < 200) {
+		if (jogando && cano.proximoCano && cano.posicao < 180) {
 			cano.proximoCano = false
-			canos.unshift(new Cano(cano.posicao + 240, Math.random() * 120 + 120, 180))
+			criarCano()
 		}
 	
 		// Verificar colisão
-		if (jogando && Math.abs(cano.posicao - lobo.posicaoX) < 48 && Math.abs(cano.altura - lobo.posicaoY) > cano.abertura / 2 - 40) {
+		if (jogando && Math.abs(cano.posicao - lobo.posicaoX) < 48 && Math.abs(cano.altura - lobo.posicaoY) > cano.abertura / 2 - 32) {
 			colisao()
 		}
 
@@ -194,15 +206,12 @@ function cicloCanos() {
 	})
 }
 
-// Variáveis de tempo
+// Variáveis
 let tempoDelta = 0
 let tempoAnterior = 0
-
-// Variáveis de jogo
 let mostrarTitulo = true
 let jogando = false
 let prontoParaComecar = true
-let velocidade = 160
 let tempoDeFlash = 0
 let pontos = 0
 
@@ -224,7 +233,7 @@ function frame(tempoAtual) {
 	tempoAnterior = tempoAtual
 
 	// Desenhar céu
-	contexto.fillStyle = '#48c'
+	contexto.fillStyle = corDoCeu
 	contexto.fillRect(0,0,canvas.width,canvas.height)
 
 	// Cidade e nuvens
@@ -244,7 +253,7 @@ function frame(tempoAtual) {
 	contexto.font = '28px sans-serif';
 	contexto.fillStyle = '#efefef'
 	contexto.textAlign = 'center'
-	if (mostrarTitulo) contexto.fillText('Flappy Lobo', 200, 32)
+	if (mostrarTitulo) contexto.fillText(titulo, 200, 32)
 	else contexto.fillText(pontos, 200, 32)
 	if (prontoParaComecar) contexto.fillText('Clique para jogar', 200, 200)
 
