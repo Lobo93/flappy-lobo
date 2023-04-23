@@ -3,9 +3,6 @@ let corDoCeu = '#4488cc' // Cor do céu
 let velocidade = 160 // velocidade do jogo (quanto maior, mais rápido)
 let espacoEntreCanos = 180 // Espaçamento entre os canos (quanto maior, mais fácil passar pelos canos)
 
-//Mudar título do documento
-document.title = titulo
-
 // Canvas
 const contexto = canvas.getContext('2d')
 
