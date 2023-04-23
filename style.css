@@ -1,0 +1,39 @@
+:root {
+	height: 100%;
+}
+
+/* Disable selections */
+* {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+body {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: sans-serif;
+	margin: 0;
+	color: #eee;
+	background-color: #111;
+}
+
+canvas {
+	image-rendering: pixelated;
+}
+
+@media (orientation:landscape) {
+	canvas {
+		height: 100%;
+	}
+}
+
+@media (orientation:portrait) {
+	canvas {
+		width: 100%;
+	}
+}
